@@ -1,0 +1,31 @@
+#DiaryEditor {
+  border: 1px solid gray;
+  padding: 30px;
+}
+
+input {
+  width: 500px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+textarea {
+  width: 500px;
+  height: 200px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+#content-group {
+  display: flex;
+}
+
+select {
+  margin-bottom: 10px;
+}
+
+button {
+  cursor: pointer;
+  float: right;
+  margin-bottom: 20px;
+}
