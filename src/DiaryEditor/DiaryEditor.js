@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./DiaryEditor.css";
 
 const DiaryEditor = () => {
+  const inputFocus = useRef();
+  const contentsFocus = useRef();
+
   const [state, setState] = useState({
     author: "",
     contents: "",
@@ -17,7 +20,14 @@ const DiaryEditor = () => {
 
   function onSubmit() {
     console.log(state);
-    if (!state.author || !state.contents) alert("Please input something");
+    if (!state.author) {
+      inputFocus.current.focus();
+      return;
+    }
+    if (!state.contents) {
+      contentsFocus.current.focus();
+      return;
+    }
   }
 
   return (
@@ -31,6 +41,7 @@ const DiaryEditor = () => {
           name="author"
           placeholder="title"
           onChange={onInput}
+          ref={inputFocus}
         ></input>
       </div>
       <div id="content-group">
@@ -40,6 +51,7 @@ const DiaryEditor = () => {
           name="contents"
           placeholder="contents"
           onChange={onInput}
+          ref={contentsFocus}
         ></textarea>
       </div>
       <div>

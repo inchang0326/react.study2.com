@@ -1,0 +1,13 @@
+.DiaryContainer {
+  display: flex;
+  flex-direction: column;
+}
+.diary-subject {
+  display: flex;
+}
+.diary-subject .diary-category {
+  width: 100px;
+  padding: 20px;
+  border: solid 1px gray;
+  background-color: rgb(240, 240, 240);
+}
