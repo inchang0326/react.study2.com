@@ -1,13 +1,10 @@
-.DiaryContainer {
-  display: flex;
-  flex-direction: column;
+#DiaryListContainer {
+  margin-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
-.diary-subject {
-  display: flex;
-}
-.diary-subject .diary-category {
-  width: 100px;
-  padding: 20px;
-  border: solid 1px gray;
-  background-color: rgb(240, 240, 240);
+#deleteBtn {
+  /* cursor: pointer;
+  float: right;
+  margin-top: 20px; */
 }

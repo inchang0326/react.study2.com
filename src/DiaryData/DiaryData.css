@@ -1,8 +1,0 @@
-.diary-data-inner {
-  display: flex;
-}
-.diary-data-inner .diary-category {
-  width: 100px;
-  padding: 20px;
-  border: solid 1px gray;
-}

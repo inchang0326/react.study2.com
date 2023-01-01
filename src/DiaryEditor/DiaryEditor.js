@@ -1,3 +1,4 @@
+import { Form, Divider, Input, Button, Select } from "antd";
 import { useRef, useState } from "react";
 import "./DiaryEditor.css";
 
@@ -12,61 +13,106 @@ const DiaryEditor = () => {
   });
 
   function onInput(e) {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+    if (typeof e != "object") {
+      setState({
+        ...state,
+        emotion: e,
+      });
+    } else {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+    }
   }
 
   function onSubmit() {
     console.log(state);
-    if (!state.author) {
-      inputFocus.current.focus();
-      return;
-    }
-    if (!state.contents) {
-      contentsFocus.current.focus();
-      return;
-    }
+    // if (!state.author) {
+    //   inputFocus.current.focus();
+    //   return;
+    // }
+    // if (!state.contents) {
+    //   contentsFocus.current.focus();
+    //   return;
+    // }
   }
 
   return (
     <div id="DiaryEditor">
-      <h2>Daily Diary</h2>
-      <div>
-        <span>Title</span>
-        <input
-          type="text"
-          value={state.author}
+      <h1>Daily Diary</h1>
+      <Form name="save" onFinish={onSubmit}>
+        <Form.Item
           name="author"
-          placeholder="title"
-          onChange={onInput}
-          ref={inputFocus}
-        ></input>
-      </div>
-      <div id="content-group">
-        <span>Contents</span>
-        <textarea
-          value={state.contents}
+          label={<div className="diary-label">Author</div>}
+          rules={[{ required: true, message: "please input the author" }]}
+        >
+          <Input
+            name="author"
+            value={state.author}
+            onChange={onInput}
+            className="diary-author"
+            size="large"
+            placeholder="please input the author"
+          />
+        </Form.Item>
+        <Form.Item
           name="contents"
-          placeholder="contents"
-          onChange={onInput}
-          ref={contentsFocus}
-        ></textarea>
-      </div>
-      <div>
-        <span>Emotion Score</span>
-        <select value={state.emotion} name="emotion" onChange={onInput}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-        </select>
-      </div>
-      <div>
-        <button onClick={onSubmit}>save</button>
-      </div>
+          label={<div className="diary-label">Contents</div>}
+          rules={[{ required: true, message: "please input the contents" }]}
+        >
+          <Input.TextArea
+            name="contents"
+            value={state.contents}
+            onChange={onInput}
+            className="diary-contents"
+            size="large"
+            placeholder="please input the contents"
+          />
+        </Form.Item>
+        <Form.Item
+          name="emotion"
+          label={<div className="diary-label">Emotion</div>}
+          rules={[
+            { required: true, message: "please select an emotion score" },
+          ]}
+        >
+          <Select
+            name="emotion"
+            value={state.emotion}
+            onChange={onInput}
+            style={{ width: 100 }}
+            options={[
+              {
+                value: "1",
+                label: "1",
+              },
+              {
+                value: "2",
+                label: "2",
+              },
+              {
+                value: "3",
+                label: "3",
+              },
+              {
+                value: "4",
+                label: "4",
+              },
+              {
+                value: "5",
+                label: "5",
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button id="submit-button" htmlType="submit">
+            save
+          </Button>
+        </Form.Item>
+        <Divider />
+      </Form>
     </div>
   );
 };
