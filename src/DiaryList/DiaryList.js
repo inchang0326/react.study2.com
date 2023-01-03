@@ -6,7 +6,7 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
   const columns = [
     {
       title: "No",
-      dataIndex: "id",
+      dataIndex: "key",
       render: (text) => (
         <a onClick={onClick} name={text}>
           {text}

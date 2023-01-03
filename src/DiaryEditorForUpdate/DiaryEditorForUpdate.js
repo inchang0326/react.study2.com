@@ -22,7 +22,7 @@ const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
   }
 
   function onSubmit(e) {
-    onUpdate(e, diaryData.id);
+    onUpdate(e, diaryData.key);
     navi("/");
   }
 

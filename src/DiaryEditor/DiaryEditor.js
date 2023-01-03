@@ -1,10 +1,8 @@
 import { Form, Divider, Input, Button, Select, message } from "antd";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "./DiaryEditor.css";
 
 const DiaryEditor = ({ onCreate }) => {
-  const id = useRef(1);
-
   const [state, setState] = useState({
     author: "",
     contents: "",
@@ -29,13 +27,11 @@ const DiaryEditor = ({ onCreate }) => {
     console.log(e);
     onCreate({
       key: (Math.random() + 1).toString(36).substring(7),
-      id: id.current,
       author: state.author,
       contents: state.contents,
       emotion: state.emotion,
       createdAt: new Date().getTime(),
     });
-    id.current += 1;
     message.success("contents uploaded !!");
   }
 

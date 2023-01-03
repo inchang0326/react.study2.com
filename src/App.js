@@ -28,22 +28,22 @@ function App() {
   const onData = (toBeUpdatedData) => {
     console.log(toBeUpdatedData);
     const diaryData = diaryList.filter((origin) => {
-      return origin.id === Number(toBeUpdatedData);
+      return origin.key === toBeUpdatedData;
     });
     console.log(diaryData[0]);
     setDairyData(diaryData[0]);
     navi("/update");
   };
 
-  const onUpdate = (toBeUpdatedData, id) => {
+  const onUpdate = (toBeUpdatedData, key) => {
     console.log(toBeUpdatedData);
     const newDiaryList = diaryList.filter((origin) => {
-      origin.key = (Math.random() + 1).toString(36).substring(7);
-      if (origin.id === id) {
+      if (origin.key === key) {
         origin.author = toBeUpdatedData.author;
         origin.contents = toBeUpdatedData.contents;
         origin.emotion = toBeUpdatedData.emotion;
       }
+      origin.key = (Math.random() + 1).toString(36).substring(7);
       return true;
     });
     console.log(newDiaryList);
