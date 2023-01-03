@@ -1,0 +1,39 @@
+#DiaryEditor {
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+h1 {
+  margin-bottom: 50px;
+}
+
+.diary-label {
+  font-weight: bold;
+  width: 70px;
+}
+
+.diary-author {
+  width: 200px;
+}
+
+.diary-contents {
+  width: 500px;
+}
+
+#update-button {
+  margin-top: 10px;
+  width: 75px;
+  background-color: rgb(30, 120, 255);
+  color: white;
+  border: none;
+}
+
+#cancle-button {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 75px;
+  background-color: rgb(30, 120, 255);
+  color: white;
+  border: none;
+}

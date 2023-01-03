@@ -1,52 +1,71 @@
 import "./DiaryList.css";
 import { useState } from "react";
-import { Button, Table } from "antd";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-dayjs.extend(relativeTime);
+import { Button, message, Table } from "antd";
 
-const columns = [
-  {
-    title: "No",
-    dataIndex: "key",
-  },
-  {
-    title: "Author",
-    dataIndex: "author",
-  },
-  {
-    title: "Contents",
-    dataIndex: "contents",
-  },
-  {
-    title: "Emotion",
-    dataIndex: "emotion",
-  },
-  {
-    title: "CreatedAt",
-    dataIndex: "createdAt",
-  },
-];
+const DiaryList = ({ diaryList, onDelete, onData }) => {
+  const columns = [
+    {
+      title: "No",
+      dataIndex: "id",
+      render: (text) => (
+        <a onClick={onClick} name={text}>
+          {text}
+        </a>
+      ),
+    },
+    {
+      title: "Author",
+      dataIndex: "author",
+    },
+    {
+      title: "Contents",
+      dataIndex: "contents",
+    },
+    {
+      title: "Emotion",
+      dataIndex: "emotion",
+    },
+    {
+      title: "CreatedAt",
+      dataIndex: "createdAt",
+    },
+  ];
 
-const DiaryList = ({ diaryList }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
-  const start = () => {
+
+  const onSubmit = () => {
+    if (
+      !window.confirm(
+        `Do you really want to delete ${selectedRowKeys} contents?`
+      )
+    )
+      return;
+
     setLoading(true);
+
     // ajax request after empty completing
     setTimeout(() => {
+      onDelete(selectedRowKeys);
       setSelectedRowKeys([]);
       setLoading(false);
+      message.success("selected contents deleted !!");
     }, 1000);
   };
+
+  const onClick = (e) => {
+    onData(e.target.name);
+  };
+
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
+
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+
   const hasSelected = selectedRowKeys.length > 0;
 
   return (
@@ -58,11 +77,11 @@ const DiaryList = ({ diaryList }) => {
       >
         <Button
           type="primary"
-          onClick={start}
+          onClick={onSubmit}
           disabled={!hasSelected}
           loading={loading}
         >
-          Reload
+          delete
         </Button>
         <span
           style={{
@@ -75,7 +94,7 @@ const DiaryList = ({ diaryList }) => {
       <Table
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={diaryList}
+        dataSource={[...diaryList]}
       />
     </div>
   );

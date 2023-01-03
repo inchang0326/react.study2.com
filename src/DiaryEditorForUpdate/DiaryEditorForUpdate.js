@@ -1,15 +1,11 @@
-import { Form, Divider, Input, Button, Select, message } from "antd";
-import { useRef, useState } from "react";
-import "./DiaryEditor.css";
+import { Form, Divider, Input, Button, Select } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import "./DiaryEditorForUpdate.css";
 
-const DiaryEditor = ({ onCreate }) => {
-  const id = useRef(1);
-
-  const [state, setState] = useState({
-    author: "",
-    contents: "",
-    emotion: "",
-  });
+const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
+  const navi = useNavigate();
+  const [state, setState] = useState(diaryData);
 
   function onInput(e) {
     if (typeof e != "object") {
@@ -26,23 +22,26 @@ const DiaryEditor = ({ onCreate }) => {
   }
 
   function onSubmit(e) {
-    console.log(e);
-    onCreate({
-      key: (Math.random() + 1).toString(36).substring(7),
-      id: id.current,
-      author: state.author,
-      contents: state.contents,
-      emotion: state.emotion,
-      createdAt: new Date().getTime(),
-    });
-    id.current += 1;
-    message.success("contents uploaded !!");
+    onUpdate(e, diaryData.id);
+    navi("/");
+  }
+
+  function onCancle() {
+    navi("/");
   }
 
   return (
     <div id="DiaryEditor">
       <h1>Daily Diary</h1>
-      <Form name="save" onFinish={onSubmit}>
+      <Form
+        name="save"
+        fields={[
+          { name: ["author"], value: state.author },
+          { name: ["contents"], value: state.contents },
+          { name: ["emotion"], value: state.emotion },
+        ]}
+        onFinish={onSubmit}
+      >
         <Form.Item
           name="author"
           label={<div className="diary-label">Author</div>}
@@ -108,8 +107,11 @@ const DiaryEditor = ({ onCreate }) => {
           />
         </Form.Item>
         <Form.Item>
-          <Button id="submit-button" htmlType="submit">
-            save
+          <Button id="update-button" htmlType="submit">
+            update
+          </Button>
+          <Button id="cancle-button" htmlType="button" onClick={onCancle}>
+            cancle
           </Button>
         </Form.Item>
         <Divider />
@@ -118,4 +120,12 @@ const DiaryEditor = ({ onCreate }) => {
   );
 };
 
-export default DiaryEditor;
+DiaryEditorForUpdate.defaultProps = {
+  diaryData: {
+    author: "",
+    contents: "",
+    emotion: "",
+  },
+};
+
+export default DiaryEditorForUpdate;
