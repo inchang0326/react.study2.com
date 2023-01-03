@@ -19,7 +19,7 @@ function App() {
   const onDelete = (toBeDeletedData) => {
     console.log(toBeDeletedData);
     const newDiaryList = diaryList.filter((origin) =>
-      toBeDeletedData.every((data) => data !== origin.id)
+      toBeDeletedData.every((data) => data !== origin.key)
     );
     console.log(newDiaryList);
     setDiaryList(newDiaryList);

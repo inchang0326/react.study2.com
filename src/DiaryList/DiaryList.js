@@ -94,7 +94,7 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
       <Table
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={[...diaryList]}
+        dataSource={diaryList}
       />
     </div>
   );
