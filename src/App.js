@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import "./DiaryEditor/DiaryEditor";
@@ -10,8 +10,6 @@ function App() {
   const navi = useNavigate();
   const [diaryList, setDiaryList] = useState([]);
   const [diaryData, setDairyData] = useState(null);
-
-  console.log(diaryData);
 
   const onCreate = (newData) => {
     console.log(newData);
