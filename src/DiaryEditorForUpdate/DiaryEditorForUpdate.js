@@ -1,11 +1,26 @@
 import { Form, Divider, Input, Button, Select } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./DiaryEditorForUpdate.css";
 
 const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
   const navi = useNavigate();
   const [state, setState] = useState(diaryData);
+
+  // 1. 테이블 글 선택이 달라지면, diaryData도 업뎃된다.
+  useEffect(() => {
+    setState(diaryData); // 2. 그러면 setState를 통해 해당 페이지를 다시 그린다.
+    // 변화하는 diaryData를 제어할 수 있음. 즉, 해당 부분에서 변화하는 state를 제어할 수 있다.
+  }, [diaryData]); // 3. 하지만 다시 그려질때의 diaryState는 달라지지 않기 때문에, 무한 콜백을 멈춘다.
+
+  function handleOnUpdate(e) {
+    onUpdate(e, diaryData.key);
+    navi("/");
+  }
+
+  function onCancle() {
+    navi("/");
+  }
 
   function onInput(e) {
     if (typeof e != "object") {
@@ -21,15 +36,6 @@ const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
     }
   }
 
-  function onSubmit(e) {
-    onUpdate(e, diaryData.key);
-    navi("/");
-  }
-
-  function onCancle() {
-    navi("/");
-  }
-
   return (
     <div id="DiaryEditor">
       <h1>Daily Diary</h1>
@@ -40,7 +46,7 @@ const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
           { name: ["contents"], value: state.contents },
           { name: ["emotion"], value: state.emotion },
         ]}
-        onFinish={onSubmit}
+        onFinish={handleOnUpdate}
       >
         <Form.Item
           name="author"

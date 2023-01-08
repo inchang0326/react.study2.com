@@ -11,6 +11,8 @@ function App() {
   const [diaryList, setDiaryList] = useState([]);
   const [diaryData, setDairyData] = useState(null);
 
+  console.log(diaryData);
+
   const onCreate = (newData) => {
     console.log(newData);
     setDiaryList([newData, ...diaryList]);
@@ -35,6 +37,7 @@ function App() {
     navi("/update");
   };
 
+  // bug fix. 특정 한목 선택 후 다른 항목 선택 후 내용 업데이트하면, 노출되는 내용은 첫번째 것인데, 다음으로 선택한 항목이 업데이트됨.
   const onUpdate = (toBeUpdatedData, key) => {
     console.log(toBeUpdatedData);
     const newDiaryList = diaryList.filter((origin) => {
@@ -43,7 +46,7 @@ function App() {
         origin.contents = toBeUpdatedData.contents;
         origin.emotion = toBeUpdatedData.emotion;
       }
-      origin.key = (Math.random() + 1).toString(36).substring(7);
+      origin.key = (Math.random() + 1).toString(36).substring(7); // antd table의 경우, key가 같을 경우, 내용 업데이트가 안됨.
       return true;
     });
     console.log(newDiaryList);

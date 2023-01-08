@@ -8,7 +8,7 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
       title: "No",
       dataIndex: "key",
       render: (text) => (
-        <a onClick={onClick} name={text}>
+        <a onClick={handleOnData} name={text}>
           {text}
         </a>
       ),
@@ -34,7 +34,7 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = () => {
+  const handleOnDelete = () => {
     if (
       !window.confirm(
         `Do you really want to delete ${selectedRowKeys} contents?`
@@ -53,7 +53,7 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
     }, 1000);
   };
 
-  const onClick = (e) => {
+  const handleOnData = (e) => {
     onData(e.target.name);
   };
 
@@ -77,7 +77,7 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
       >
         <Button
           type="primary"
-          onClick={onSubmit}
+          onClick={handleOnDelete}
           disabled={!hasSelected}
           loading={loading}
         >

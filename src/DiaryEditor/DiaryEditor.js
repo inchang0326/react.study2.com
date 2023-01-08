@@ -9,6 +9,18 @@ const DiaryEditor = ({ onCreate }) => {
     emotion: "",
   });
 
+  function handleOnCreate(e) {
+    console.log(e);
+    onCreate({
+      key: (Math.random() + 1).toString(36).substring(7),
+      author: state.author,
+      contents: state.contents,
+      emotion: state.emotion,
+      createdAt: new Date().getTime(),
+    });
+    message.success("contents uploaded !!");
+  }
+
   function onInput(e) {
     if (typeof e != "object") {
       setState({
@@ -23,22 +35,10 @@ const DiaryEditor = ({ onCreate }) => {
     }
   }
 
-  function onSubmit(e) {
-    console.log(e);
-    onCreate({
-      key: (Math.random() + 1).toString(36).substring(7),
-      author: state.author,
-      contents: state.contents,
-      emotion: state.emotion,
-      createdAt: new Date().getTime(),
-    });
-    message.success("contents uploaded !!");
-  }
-
   return (
     <div id="DiaryEditor">
       <h1>Daily Diary</h1>
-      <Form name="save" onFinish={onSubmit}>
+      <Form name="save" onFinish={handleOnCreate}>
         <Form.Item
           name="author"
           label={<div className="diary-label">Author</div>}
