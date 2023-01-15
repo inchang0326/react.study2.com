@@ -1,7 +1,7 @@
 # Diary Web Project
 
-I created this project to study React.js deeply.
-This project was referred to one of Inflearn lectures
+I created this project to study React.js deeply.  
+This project was referred to one of Inflearn lectures.
 
 ## React Hooks Optimization
 
@@ -15,10 +15,10 @@ This project was referred to one of Inflearn lectures
 ## Web Structure
 
 Home  
-ㄴ Create a post
-ㄴ View posts
-&nbsp;&nbsp;&nbsp;ㄴ Delete selected posts
-&nbsp;&nbsp;&nbsp;ㄴ select a post for update
+ㄴ Create a post  
+ㄴ View posts  
+&nbsp;&nbsp;&nbsp;ㄴ Delete selected posts  
+&nbsp;&nbsp;&nbsp;ㄴ select a post for update  
 ㄴ Update a selected post
 
 ### Demo Video
