@@ -1,14 +1,17 @@
-import { Form, Divider, Input, Button, Select } from "antd";
-import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
 import "./DiaryEditorForUpdate.css";
+import { Form, Divider, Input, Button, Select } from "antd";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { DiaryStateContext } from "../App";
 
-const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
+const DiaryEditorForUpdate = ({ onUpdate }) => {
+  const { diaryData } = useContext(DiaryStateContext);
+  const navi = useNavigate();
+  const [state, setState] = useState(diaryData);
+
   useEffect(() => {
     console.log("DiaryEditorForUpdate Rendered");
   });
-  const navi = useNavigate();
-  const [state, setState] = useState(diaryData);
 
   // 1. 테이블 글 선택이 달라지면, diaryData도 업뎃된다.
   useEffect(() => {
@@ -142,4 +145,4 @@ DiaryEditorForUpdate.defaultProps = {
   },
 };
 
-export default React.memo(DiaryEditorForUpdate);
+export default DiaryEditorForUpdate;

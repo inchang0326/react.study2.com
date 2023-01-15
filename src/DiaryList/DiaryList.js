@@ -1,15 +1,14 @@
 import "./DiaryList.css";
-import { useEffect, useState } from "react";
 import { Button, message, Table } from "antd";
-import React from "react";
+import { memo, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { DiaryStateContext } from "../App";
 
-const DiaryList = ({ diaryList, onDelete, onData }) => {
+const DiaryList = ({ onDelete, onData }) => {
+  const { diaryList } = useContext(DiaryStateContext);
   const navi = useNavigate();
-
-  useEffect(() => {
-    console.log("DiaryList Rendered");
-  });
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [loading, setLoading] = useState(false);
   const columns = [
     {
       title: "No",
@@ -38,8 +37,9 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
     },
   ];
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    console.log("DiaryList Rendered");
+  });
 
   const handleOnDelete = () => {
     if (
@@ -57,8 +57,8 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
       setSelectedRowKeys([]);
       setLoading(false);
       message.success("selected contents deleted !!");
+      navi("/");
     }, 1000);
-    navi("/");
   };
 
   const handleOnData = (e) => {
@@ -107,34 +107,37 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
     </div>
   );
 };
-// React Hooks 최적화 관련, memo 사용 예시 )
+
+/*
+// React Hooks 최적화 관련, memo 커스터마이징 사용 예시 )
 // memo는 객체 props 전달 시, 얕은 비교를(주소에 의한 비교) 하기 떄문에, 객체 memoization이 잘 동작하지 않는다.
 // 따라서 아래 처럼 객체 props 전달 시, 깊은 비교를 할 수 있도록 커스터마이징 할 필요가 있다.
-// const areEqual = (prevProps, nextProps) => {
-//   if (prevProps.diaryList.length != nextProps.diaryList.length) {
-//     return false;
-//   } else {
-//     let ix = 0;
-//     prevProps.diaryList.map((it) => {
-//       if (
-//         !(
-//           it.author == nextProps.diaryList[ix].author &&
-//           it.contents == nextProps.diaryList[ix].contents &&
-//           it.emotion == nextProps.diaryList[ix].emotion
-//         )
-//       ) {
-//         return false;
-//       }
-//       ix++;
-//     });
-//     return true;
-//   }
-// };
+const areEqual = (prevProps, nextProps) => {
+  if (prevProps.diaryList.length != nextProps.diaryList.length) {
+    return false;
+  } else {
+    let ix = 0;
+    prevProps.diaryList.map((it) => {
+      if (
+        !(
+          it.author == nextProps.diaryList[ix].author &&
+          it.contents == nextProps.diaryList[ix].contents &&
+          it.emotion == nextProps.diaryList[ix].emotion
+        )
+      ) {
+        return false;
+      }
+      ix++;
+    });
+    return true;
+  }
+};
 
-// const MemoizedDiaryList = React.memo(DiaryList, areEqual);
+const MemoizedDiaryList = React.memo(DiaryList, areEqual);
+*/
 
 DiaryList.defaultProps = {
   diaryList: [],
 };
 
-export default React.memo(DiaryList);
+export default memo(DiaryList);
