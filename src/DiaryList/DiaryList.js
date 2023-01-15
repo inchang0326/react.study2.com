@@ -1,9 +1,15 @@
 import "./DiaryList.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, message, Table } from "antd";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const DiaryList = ({ diaryList, onDelete, onData }) => {
+  const navi = useNavigate();
+
+  useEffect(() => {
+    console.log("DiaryList Rendered");
+  });
   const columns = [
     {
       title: "No",
@@ -52,6 +58,7 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
       setLoading(false);
       message.success("selected contents deleted !!");
     }, 1000);
+    navi("/");
   };
 
   const handleOnData = (e) => {
@@ -100,9 +107,9 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
     </div>
   );
 };
-// React.memo 사용 예시 )
-// React.memo는 객체 Props 전달 시, 얕은 비교를(주소에 의한 비교) 하기 떄문에, 객체 Memoization이 잘 동작하지 않는다.
-// 따라서 아래 처럼 객체 Props 전달 시, 깊은 비교를 할 수 있도록 커스터마이징 할 필요가 있다.
+// React Hooks 최적화 관련, memo 사용 예시 )
+// memo는 객체 props 전달 시, 얕은 비교를(주소에 의한 비교) 하기 떄문에, 객체 memoization이 잘 동작하지 않는다.
+// 따라서 아래 처럼 객체 props 전달 시, 깊은 비교를 할 수 있도록 커스터마이징 할 필요가 있다.
 // const areEqual = (prevProps, nextProps) => {
 //   if (prevProps.diaryList.length != nextProps.diaryList.length) {
 //     return false;
@@ -130,4 +137,4 @@ DiaryList.defaultProps = {
   diaryList: [],
 };
 
-export default DiaryList;
+export default React.memo(DiaryList);

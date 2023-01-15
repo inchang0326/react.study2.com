@@ -1,10 +1,12 @@
 import { Form, Divider, Input, Button, Select } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./DiaryEditorForUpdate.css";
-import DiaryEditor from "../DiaryEditor/DiaryEditor";
 
 const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
+  useEffect(() => {
+    console.log("DiaryEditorForUpdate Rendered");
+  });
   const navi = useNavigate();
   const [state, setState] = useState(diaryData);
 
@@ -140,4 +142,4 @@ DiaryEditorForUpdate.defaultProps = {
   },
 };
 
-export default DiaryEditorForUpdate;
+export default React.memo(DiaryEditorForUpdate);

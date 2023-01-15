@@ -1,8 +1,12 @@
 import { Form, Divider, Input, Button, Select, message } from "antd";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DiaryEditor.css";
 
 const DiaryEditor = ({ onCreate }) => {
+  useEffect(() => {
+    console.log("DiaryEditor Rendered");
+  });
+
   const [state, setState] = useState({
     author: "",
     contents: "",
@@ -113,4 +117,4 @@ const DiaryEditor = ({ onCreate }) => {
   );
 };
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);
