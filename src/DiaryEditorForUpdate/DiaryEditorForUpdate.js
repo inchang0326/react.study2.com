@@ -2,6 +2,7 @@ import { Form, Divider, Input, Button, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./DiaryEditorForUpdate.css";
+import DiaryEditor from "../DiaryEditor/DiaryEditor";
 
 const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
   const navi = useNavigate();
@@ -34,6 +35,11 @@ const DiaryEditorForUpdate = ({ diaryData, onUpdate }) => {
         [e.target.name]: e.target.value,
       });
     }
+  }
+
+  // error 페이지 처리
+  if (!diaryData) {
+    return;
   }
 
   return (

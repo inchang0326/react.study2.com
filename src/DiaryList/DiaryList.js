@@ -1,6 +1,7 @@
 import "./DiaryList.css";
 import { useState } from "react";
 import { Button, message, Table } from "antd";
+import React from "react";
 
 const DiaryList = ({ diaryList, onDelete, onData }) => {
   const columns = [
@@ -99,6 +100,31 @@ const DiaryList = ({ diaryList, onDelete, onData }) => {
     </div>
   );
 };
+// React.memo 사용 예시 )
+// React.memo는 객체 Props 전달 시, 얕은 비교를(주소에 의한 비교) 하기 떄문에, 객체 Memoization이 잘 동작하지 않는다.
+// 따라서 아래 처럼 객체 Props 전달 시, 깊은 비교를 할 수 있도록 커스터마이징 할 필요가 있다.
+// const areEqual = (prevProps, nextProps) => {
+//   if (prevProps.diaryList.length != nextProps.diaryList.length) {
+//     return false;
+//   } else {
+//     let ix = 0;
+//     prevProps.diaryList.map((it) => {
+//       if (
+//         !(
+//           it.author == nextProps.diaryList[ix].author &&
+//           it.contents == nextProps.diaryList[ix].contents &&
+//           it.emotion == nextProps.diaryList[ix].emotion
+//         )
+//       ) {
+//         return false;
+//       }
+//       ix++;
+//     });
+//     return true;
+//   }
+// };
+
+// const MemoizedDiaryList = React.memo(DiaryList, areEqual);
 
 DiaryList.defaultProps = {
   diaryList: [],

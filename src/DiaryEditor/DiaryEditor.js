@@ -10,7 +10,6 @@ const DiaryEditor = ({ onCreate }) => {
   });
 
   function handleOnCreate(e) {
-    console.log(e);
     onCreate({
       key: (Math.random() + 1).toString(36).substring(7),
       author: state.author,
