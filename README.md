@@ -17,8 +17,8 @@ This project was referred to one of Inflearn lectures.
 Home  
 ㄴ Create a post  
 ㄴ View posts  
-&nbsp;&nbsp;&nbsp;ㄴ Delete selected posts  
-&nbsp;&nbsp;&nbsp;ㄴ select a post for update  
+&nbsp;&nbsp;&nbsp;&nbsp;ㄴ Delete selected posts  
+&nbsp;&nbsp;&nbsp;&nbsp;ㄴ Select a post for update  
 ㄴ Update a selected post
 
 ### Demo Video
