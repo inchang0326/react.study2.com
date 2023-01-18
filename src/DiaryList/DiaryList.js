@@ -2,10 +2,11 @@ import "./DiaryList.css";
 import { Button, message, Table } from "antd";
 import { memo, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { DiaryStateContext } from "../App";
+import { DiaryBehaviorContext, DiaryStateContext } from "../App";
 
-const DiaryList = ({ onDelete, onData }) => {
-  const { diaryList } = useContext(DiaryStateContext);
+const DiaryList = () => {
+  const { diaryState } = useContext(DiaryStateContext);
+  const { onDelete, onData } = useContext(DiaryBehaviorContext);
   const navi = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -102,7 +103,7 @@ const DiaryList = ({ onDelete, onData }) => {
       <Table
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={diaryList}
+        dataSource={diaryState.diaryList}
       />
     </div>
   );
@@ -135,9 +136,5 @@ const areEqual = (prevProps, nextProps) => {
 
 const MemoizedDiaryList = React.memo(DiaryList, areEqual);
 */
-
-DiaryList.defaultProps = {
-  diaryList: [],
-};
 
 export default memo(DiaryList);
