@@ -2,6 +2,7 @@ import "./DiaryEditor.css";
 import { Form, Divider, Input, Button, Select, message } from "antd";
 import { memo, useContext, useEffect, useState } from "react";
 import { DiaryBehaviorContext } from "../App";
+import dayjs from "dayjs";
 
 const DiaryEditor = () => {
   const { onCreate } = useContext(DiaryBehaviorContext);
@@ -21,7 +22,7 @@ const DiaryEditor = () => {
       author: state.author,
       contents: state.contents,
       emotion: state.emotion,
-      createdAt: new Date().getTime(),
+      createdAt: dayjs(new Date().getTime()).format("YYYY-MM-DD HH:mm"),
     });
     message.success("contents uploaded !!");
   }
