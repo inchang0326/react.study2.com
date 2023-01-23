@@ -63,7 +63,6 @@ const DiaryList = () => {
   };
 
   const handleOnData = (e) => {
-    console.log(e.target);
     onData(e.target.name);
   };
 
