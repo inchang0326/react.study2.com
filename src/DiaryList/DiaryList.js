@@ -109,32 +109,53 @@ const DiaryList = () => {
   );
 };
 
-/*
-// React Hooks 최적화 관련, memo 커스터마이징 사용 예시 )
+// React Hooks 최적화, memo 커스터마이징 사용 예시 )
 // memo는 객체 props 전달 시, 얕은 비교를(주소에 의한 비교) 하기 떄문에, 객체 memoization이 잘 동작하지 않는다.
 // 따라서 아래 처럼 객체 props 전달 시, 깊은 비교를 할 수 있도록 커스터마이징 할 필요가 있다.
-const areEqual = (prevProps, nextProps) => {
-  if (prevProps.diaryList.length != nextProps.diaryList.length) {
-    return false;
-  } else {
-    let ix = 0;
-    prevProps.diaryList.map((it) => {
-      if (
-        !(
-          it.author == nextProps.diaryList[ix].author &&
-          it.contents == nextProps.diaryList[ix].contents &&
-          it.emotion == nextProps.diaryList[ix].emotion
-        )
-      ) {
-        return false;
-      }
-      ix++;
-    });
-    return true;
-  }
-};
+// const areEqual = (prevProps, nextProps) => {
+//   console.log(prevProps);
+//   console.log(nextProps);
+//   if (
+//     prevProps.diaryState.diaryData.author ==
+//       nextProps.diaryState.diaryData.author &&
+//     prevProps.diaryState.diaryData.contents ==
+//       nextProps.diaryState.diaryData.contents &&
+//     prevProps.diaryState.diaryData.emotion ==
+//       nextProps.diaryState.diaryData.emotion &&
+//     prevProps.diaryState.diaryData.key == nextProps.diaryState.diaryData.key &&
+//     prevProps.diaryState.diaryData.createdAt ==
+//       nextProps.diaryState.diaryData.createdAt
+//   ) {
+//     console.log("1");
+//     if (
+//       prevProps.diaryState.diaryList.length !=
+//       nextProps.diaryState.diaryList.length
+//     ) {
+//       return false;
+//     } else {
+//       console.log("2");
+//       let ix = 0;
+//       prevProps.diaryState.diaryList.map((it) => {
+//         if (
+//           !(
+//             it.author == nextProps.diaryState.diaryList[ix].author &&
+//             it.contents == nextProps.diaryState.diaryList[ix].contents &&
+//             it.emotion == nextProps.diaryState.diaryList[ix].emotion &&
+//             it.key == nextProps.diaryState.diaryList[ix].key &&
+//             it.createdAt == nextProps.diaryState.diaryList[ix].createdAt
+//           )
+//         ) {
+//           return false;
+//         }
+//         ix++;
+//       });
+//       console.log("3");
+//       return true;
+//     }
+//   } else {
+//     return false;
+//   }
+// };
+// const MemoizedDiaryList = memo(DiaryList, areEqual);
 
-const MemoizedDiaryList = React.memo(DiaryList, areEqual);
-*/
-
-export default memo(DiaryList);
+export default DiaryList;

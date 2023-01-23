@@ -1,6 +1,6 @@
 import "./DiaryEditorForUpdate.css";
 import { Form, Divider, Input, Button, Select } from "antd";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryBehaviorContext, DiaryStateContext } from "../App";
 
@@ -22,7 +22,6 @@ const DiaryEditorForUpdate = () => {
 
   function handleOnUpdate(e) {
     onUpdate(e, diaryState.diaryData.key);
-    navi("/");
   }
 
   function onCancle() {
