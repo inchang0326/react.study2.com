@@ -5,11 +5,11 @@ This project was referred to one of Inflearn lectures.
 
 ## React Hooks Optimization
 
-- useState
+- useState → useReducer
 - useEffect
-- memo
-- useCallback
 - useMemo
+- useCallback
+- memo
 - createContext / useContext
 
 ## Web Structure
