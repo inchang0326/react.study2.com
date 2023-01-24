@@ -3,6 +3,7 @@ import { Form, Divider, Input, Button, Select, message } from "antd";
 import { memo, useContext, useEffect, useState } from "react";
 import { DiaryBehaviorContext } from "../App";
 import dayjs from "dayjs";
+import MyHeader from "./../Components/MyHeader";
 
 const DiaryEditor = () => {
   const { onCreate } = useContext(DiaryBehaviorContext);
@@ -43,7 +44,7 @@ const DiaryEditor = () => {
 
   return (
     <div id="DiaryEditor">
-      <h1>Daily Diary</h1>
+      <MyHeader text="Make contents"></MyHeader>
       <Form name="save" onFinish={handleOnCreate}>
         <Form.Item
           name="author"

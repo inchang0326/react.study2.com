@@ -126,7 +126,6 @@ function App() {
     <DiaryStateContext.Provider value={memoizedValue}>
       <DiaryBehaviorContext.Provider value={memoizedBehaviors}>
         <div id="App">
-          <div id="header"></div>
           <div id="body">
             <Routes>
               <Route path="/" element={<DiaryEditor></DiaryEditor>}></Route>

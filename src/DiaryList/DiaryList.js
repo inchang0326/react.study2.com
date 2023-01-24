@@ -12,7 +12,7 @@ const DiaryList = () => {
   const [loading, setLoading] = useState(false);
   const columns = [
     {
-      title: "No",
+      title: "UUID",
       dataIndex: "key",
       render: (text) => (
         <a onClick={handleOnData} name={text}>
@@ -25,15 +25,22 @@ const DiaryList = () => {
       dataIndex: "author",
     },
     {
-      title: "Contents",
+      title: "Contetns",
       dataIndex: "contents",
     },
     {
       title: "Emotion",
       dataIndex: "emotion",
+      render: (emotion) => (
+        <img
+          alt={`emotion${emotion}`}
+          src={`emotion${emotion}.png`}
+          style={{ height: "20px" }}
+        ></img>
+      ),
     },
     {
-      title: "CreatedAt",
+      title: "Created Date",
       dataIndex: "createdAt",
     },
   ];

@@ -1,8 +1,9 @@
 import "./DiaryEditorForUpdate.css";
-import { Form, Divider, Input, Button, Select } from "antd";
+import { Form, Divider, Input, Button, Select, message } from "antd";
 import { useEffect, useState, useContext, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryBehaviorContext, DiaryStateContext } from "../App";
+import MyHeader from "./../Components/MyHeader";
 
 const DiaryEditorForUpdate = () => {
   const { diaryState } = useContext(DiaryStateContext);
@@ -22,6 +23,7 @@ const DiaryEditorForUpdate = () => {
 
   function handleOnUpdate(e) {
     onUpdate(e, diaryState.diaryData.key);
+    message.success("contents updated !!");
   }
 
   function onCancle() {
@@ -49,7 +51,7 @@ const DiaryEditorForUpdate = () => {
 
   return (
     <div id="DiaryEditor">
-      <h1>Daily Diary</h1>
+      <MyHeader text="Edit selected contents"></MyHeader>
       <Form
         name="save"
         fields={[
