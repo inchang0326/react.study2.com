@@ -15,29 +15,35 @@ const initialState = {
     contents: "",
     emotion: "",
   },
-  diaryList: [],
+  diaryList: localStorage.getItem("data")
+    ? JSON.parse(localStorage.getItem("data"))
+    : [],
 };
 
 const reducer = (state, action) => {
+  let retObj = {};
   switch (action.type) {
     case "CREATE":
-      return { ...state, diaryList: [action.newData, ...state.diaryList] };
+      retObj = { ...state, diaryList: [action.newData, ...state.diaryList] };
+      break;
     case "DELETE":
-      return {
+      retObj = {
         ...state,
         diaryList: state.diaryList.filter((origin) =>
           action.toBeDeletedData.every((it) => it !== origin.key)
         ),
       };
+      break;
     case "ONDATA":
-      return {
+      retObj = {
         ...state,
         diaryData: state.diaryList.filter((origin) => {
           return origin.key === action.toBeUpdatedData;
         })[0],
       };
+      break;
     case "UPDATE":
-      return {
+      retObj = {
         ...state,
         diaryList: state.diaryList.filter((origin) => {
           if (origin.key === action.key) {
@@ -53,9 +59,13 @@ const reducer = (state, action) => {
           return true;
         }),
       };
+      break;
     default:
       return state;
   }
+  // JSON.stringify 통한 객체 직렬화
+  localStorage.setItem("data", JSON.stringify(retObj.diaryList));
+  return retObj;
 };
 
 function App() {
