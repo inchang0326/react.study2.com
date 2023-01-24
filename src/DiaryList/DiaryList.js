@@ -1,8 +1,9 @@
 import "./DiaryList.css";
-import { Button, message, Table } from "antd";
-import { memo, useEffect, useState, useContext } from "react";
+import { Button, message } from "antd";
+import { useMemo, useEffect, useState, useContext, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryBehaviorContext, DiaryStateContext } from "../App";
+import DiaryListItems from "./DiaryListItems";
 
 const DiaryList = () => {
   const { diaryState } = useContext(DiaryStateContext);
@@ -10,40 +11,6 @@ const DiaryList = () => {
   const navi = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
-  const columns = [
-    {
-      title: "UUID",
-      dataIndex: "key",
-      render: (text) => (
-        <a onClick={handleOnData} name={text}>
-          {text}
-        </a>
-      ),
-    },
-    {
-      title: "Author",
-      dataIndex: "author",
-    },
-    {
-      title: "Contetns",
-      dataIndex: "contents",
-    },
-    {
-      title: "Emotion",
-      dataIndex: "emotion",
-      render: (emotion) => (
-        <img
-          alt={`emotion${emotion}`}
-          src={`emotion${emotion}.png`}
-          style={{ height: "20px" }}
-        ></img>
-      ),
-    },
-    {
-      title: "Created Date",
-      dataIndex: "createdAt",
-    },
-  ];
 
   useEffect(() => {
     console.log("DiaryList Rendered");
@@ -69,18 +36,18 @@ const DiaryList = () => {
     }, 1000);
   };
 
-  const handleOnData = (e) => {
+  const handleOnData = useCallback((e) => {
     onData(e.target.name);
-  };
+  }, []);
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  const rowSelection = useMemo(() => {
+    return {
+      selectedRowKeys,
+      onChange: (newSelectedRowKeys) => {
+        setSelectedRowKeys(newSelectedRowKeys);
+      },
+    };
+  }, [selectedRowKeys]);
 
   const hasSelected = selectedRowKeys.length > 0;
 
@@ -107,11 +74,11 @@ const DiaryList = () => {
           {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
         </span>
       </div>
-      <Table
+      <DiaryListItems
         rowSelection={rowSelection}
-        columns={columns}
-        dataSource={diaryState.diaryList}
-      />
+        handleOnData={handleOnData}
+        diaryList={diaryState.diaryList}
+      ></DiaryListItems>
     </div>
   );
 };

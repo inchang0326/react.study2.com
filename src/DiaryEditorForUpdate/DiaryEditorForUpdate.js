@@ -1,6 +1,6 @@
 import "./DiaryEditorForUpdate.css";
 import { Form, Divider, Input, Button, Select, message } from "antd";
-import { useEffect, useState, useContext, memo } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryBehaviorContext, DiaryStateContext } from "../App";
 import MyHeader from "./../Components/MyHeader";
