@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useCallback, useMemo, useReducer } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import DiaryEditor from "./DiaryEditor/DiaryEditor";
-import DiaryEditorForUpdate from "./DiaryEditorForUpdate/DiaryEditorFmemoorUpdate";
+import DiaryEditorForUpdate from "./DiaryEditorForUpdate/DiaryEditorForUpdate";
 import DiaryList from "./DiaryList/DiaryList";
 
 /*
