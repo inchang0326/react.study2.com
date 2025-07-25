@@ -16,7 +16,7 @@ export const DiaryBehaviorContext = React.createContext();
     userReducer의 Lazy Initializer Function으로, 초기 상태를 설정함
     따라서 LocalStorage에 저장된 값을 불러오는 마운트 작업을 초기에 한 번만 수행함
 */
-const initializer = {
+const initialState = {
   diaryData: {
     author: "",
     contents: "",
@@ -152,6 +152,10 @@ function App() {
 
   const memoizedBehaviors = useMemo(() => {
     console.log("behaviors memorized");
+    /*
+        상위 컴포넌트에서 상태 관리(lifting state up)
+        : 상태 변경 메소드를 하위 컴포넌트로 전달하고, 하위 컴포넌트에서 상위 컴포넌트로 상태 변경 요청함
+    */
     return { onCreate, onDelete, onData, onUpdate };
   }, []);
 
