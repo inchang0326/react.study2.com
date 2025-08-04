@@ -1,6 +1,6 @@
 import "./DiaryEditorForUpdate.css";
 import { Form, Divider, Input, Button, Select, message } from "antd";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryBehaviorContext, DiaryStateContext } from "../App";
 import MyHeader from "./../Components/MyHeader";
@@ -15,14 +15,13 @@ const DiaryEditorForUpdate = () => {
     console.log("DiaryEditorForUpdate Rendered");
   });
 
-  // 1. 테이블 글 선택이 달라지면, diaryData도 업뎃된다.
+  // 1. 테이블 글을 선택하면(onData), App 컴포넌트에서 전달 받는 diaryState.diaryData가 갱신 됨
   useEffect(() => {
-    setState(diaryState.diaryData); // 2. 그러면 setState를 통해 해당 페이지를 다시 그린다.
-    // 변화하는 diaryData를 제어할 수 있음. 즉, 해당 부분에서 변화하는 state를 제어할 수 있다.
-  }, [diaryState.diaryData]); // 3. 하지만 다시 그려질때의 diaryState는 달라지지 않기 때문에, 무한 콜백을 멈춘다.
+    setState(diaryState.diaryData); // 2. 그러면 해당 컴포넌트의 state도 갱신해야 함(매 글 선택마다 onUpdate 대상도 달라져야 하기 때문)
+  }, [diaryState.diaryData]); // 3. 따라서 re-rendering 조건 의존성 배열을 diaryState.diaryData로 함 (참고: 빈 배열일 시 무한 콜백)
 
   function handleOnUpdate(e) {
-    onUpdate(e, diaryState.diaryData.key);
+    onUpdate(e);
     message.success("contents updated !!");
   }
 
@@ -55,12 +54,17 @@ const DiaryEditorForUpdate = () => {
       <Form
         name="save"
         fields={[
+          { name: ["key"], value: state.key },
           { name: ["author"], value: state.author },
           { name: ["contents"], value: state.contents },
           { name: ["emotion"], value: state.emotion },
+          { name: ["createdAt"], value: state.createdAt },
         ]}
         onFinish={handleOnUpdate}
       >
+        <Form.Item hidden="true" name="key">
+          <Input name="key" value={state.key} />
+        </Form.Item>
         <Form.Item
           name="author"
           label={<div className="diary-label">Author</div>}
@@ -125,6 +129,9 @@ const DiaryEditorForUpdate = () => {
             ]}
           />
         </Form.Item>
+        <Form.Item hidden="true" name="createdAt">
+          <Input name="createdAt" value={state.createdAt} />
+        </Form.Item>
         <Form.Item>
           <Button id="update-button" htmlType="submit">
             update
@@ -139,4 +146,4 @@ const DiaryEditorForUpdate = () => {
   );
 };
 
-export default DiaryEditorForUpdate;
+export default memo(DiaryEditorForUpdate);

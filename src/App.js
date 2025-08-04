@@ -18,9 +18,11 @@ export const DiaryBehaviorContext = React.createContext();
 */
 const initialState = {
   diaryData: {
+    key: "",
     author: "",
     contents: "",
     emotion: "",
+    createdAt: "",
   },
   diaryList: localStorage.getItem("data")
     ? JSON.parse(localStorage.getItem("data"))
@@ -28,7 +30,7 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  // as-is 상태, to-be 상태
+  // state: as-is 상태, action: action이 발생했을 때의 parameter
   let retObj = {};
   switch (action.type) {
     case "CREATE":
@@ -51,22 +53,15 @@ const reducer = (state, action) => {
       };
       break;
     case "UPDATE":
+      const newDiaryList = state.diaryList.map((origin) => {
+        return origin.key === action.toBeUpdatedData.key
+          ? { ...action.toBeUpdatedData }
+          : { ...origin };
+      });
       retObj = {
         ...state,
-        diaryList: state.diaryList.filter((origin) => {
-          if (origin.key === action.key) {
-            origin.author = action.toBeUpdatedData.author;
-            origin.contents = action.toBeUpdatedData.contents;
-            origin.emotion = action.toBeUpdatedData.emotion;
-          }
-          /* 
-          antd table의 경우, key가 같으면 내용 업데이트가 안됨에 따라 DiaryList를 통째로 업뎃하여 굉장히 비효율적임
-          그 결과 해당 메소드를 props로 받고 있는 DiaryEditorForUpdate 컴포넌트에 대한 useCallback + React.memo 최적화가 어렵고,
-          게다가 어쩔수없이 props의 불변성을 위반하며 origin.key를 수정해야 함 (함수를 수행했는데 벨류와 함께 원래 키가 바뀌어있는?)
-          */
-          origin.key = (Math.random() + 1).toString(36).substring(7);
-          return true;
-        }),
+        diaryData: action.toBeUpdatedData,
+        diaryList: newDiaryList,
       };
       break;
     default:
@@ -78,6 +73,7 @@ const reducer = (state, action) => {
 };
 
 function App() {
+  console.log("App Rendered");
   const navi = useNavigate();
   // const [현재상태, 상태변경트리거] = useReducer(상태변경행위, 초기상태)
   const [diaryState, dispatch] = useReducer(reducer, initialState);
@@ -122,11 +118,11 @@ function App() {
   /*
   아래 Context에 useMemo 통해 최적화하고 있으므로, 사실상 callback hooks는 필요없는 듯 함
   중요 ) 글 업뎃 시, 글 작성과 다르게 DiaryEditorForUpdate 컴포넌트가 계속해서 Rerendering 되는 이유는
-        diaryState가 변하기 때문임. DiaryEditorForUpdate 컴포넌트는 diaryState를 사용하고 있음.
+        diaryData가 변하기 때문임. DiaryEditorForUpdate 컴포넌트는 diaryData를 사용하고 있음.
   */
-  const onUpdate = (toBeUpdatedData, key) => {
+  const onUpdate = (toBeUpdatedData) => {
     console.log("onUpdate() executed");
-    dispatch({ type: "UPDATE", toBeUpdatedData, key });
+    dispatch({ type: "UPDATE", toBeUpdatedData });
     // navi("/");
   };
 
@@ -148,7 +144,7 @@ function App() {
   const memoizedValue = useMemo(() => {
     console.log("value memorized");
     return { diaryState };
-  }, [diaryState.diaryData, diaryState.diaryList]);
+  }, [diaryState.diaryData, diaryState.diaryList]); // 의존성 배열 중 하나만 변경되더라도 useMemo의 콜백함수는 재수행됨
 
   const memoizedBehaviors = useMemo(() => {
     console.log("behaviors memorized");

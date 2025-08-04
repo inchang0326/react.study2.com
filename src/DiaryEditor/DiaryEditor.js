@@ -8,6 +8,7 @@ import MyHeader from "./../Components/MyHeader";
 const DiaryEditor = () => {
   const { onCreate } = useContext(DiaryBehaviorContext);
   const [state, setState] = useState({
+    key: "",
     author: "",
     contents: "",
     emotion: "",
