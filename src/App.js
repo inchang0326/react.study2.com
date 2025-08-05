@@ -29,8 +29,11 @@ const initialState = {
     : [],
 };
 
+/**
+ *  state: as-is 상태, action: to-be 상태로 변경하기 위한 action params
+ *  state와 action을 변경해선 안되고 새로운 상태로 출력해야 함(im-mutability)
+ */
 const reducer = (state, action) => {
-  // state: as-is 상태, action: action이 발생했을 때의 parameter
   let retObj = {};
   switch (action.type) {
     case "CREATE":
@@ -143,6 +146,11 @@ function App() {
   */
   const memoizedValue = useMemo(() => {
     console.log("value memorized");
+    /**
+     *  추후 개선사항: re-rendering 최적화
+     *  - DiaryList 컴포넌트로 가는 diaryList props와 DiaryEditorForUpdate 컴포넌트로 가는 diaryData props 분리
+     *  - 또는 각각의 컴포넌트에서 diaryState props 내 diaryList와 diaryData 비교 후 re-rendring 여부 결정하기
+     */
     return { diaryState };
   }, [diaryState.diaryData, diaryState.diaryList]); // 의존성 배열 중 하나만 변경되더라도 useMemo의 콜백함수는 재수행됨
 
